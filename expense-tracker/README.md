@@ -38,7 +38,6 @@ expense-tracker/
 │
 ├── manage.py                    # Django management utility
 ├── requirements.txt             # Python dependencies
-├── db.sqlite3                   # SQLite database (auto-created)
 ├── .gitignore                   # Files to ignore in Git
 ├── README.md                    # This file
 │
