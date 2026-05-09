@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Delete Expense — Expense Tracker{% endblock %}
+
+{% block content %}
+<!-- ============================================================
+     DELETE CONFIRMATION PAGE
+     Asks the user to confirm before permanently deleting an expense.
+============================================================ -->
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+
+      <div class="card text-center">
+        <div class="card-body p-5">
+
+          <!-- Warning Icon -->
+          <div style="font-size: 3.5rem; margin-bottom: 1rem;">🗑️</div>
+
+          <h4 class="fw-bold mb-2">Delete Expense?</h4>
+
+          <p class="text-muted mb-1">You are about to permanently delete:</p>
+
+          <!-- Expense Summary -->
+          <div class="p-3 mb-4 rounded" style="background: #fee2e2;">
+            <p class="fw-bold mb-1" style="color: #991b1b;">{{ expense.title }}</p>
+            <p class="mb-1 text-muted small">
+              <i class="bi bi-currency-rupee"></i>{{ expense.amount|floatformat:2 }}
+              &bull; {{ expense.category }}
+              &bull; {{ expense.date|date:"d M Y" }}
+            </p>
+          </div>
+
+          <p class="text-danger small mb-4">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            This action <strong>cannot be undone</strong>.
+          </p>
+
+          <!-- Confirm / Cancel Buttons -->
+          <div class="d-flex gap-2 justify-content-center">
+
+            <!-- Cancel — safe option -->
+            <a href="{% url 'expense_list' %}" class="btn btn-outline-secondary px-4">
+              <i class="bi bi-arrow-left me-1"></i>Cancel
+            </a>
+
+            <!-- Confirm Delete — POST request to actually delete -->
+            <form method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger px-4">
+                <i class="bi bi-trash me-1"></i>Yes, Delete
+              </button>
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

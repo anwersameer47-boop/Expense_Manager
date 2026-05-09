@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block title %}My Expenses — Expense Tracker{% endblock %}
+
+{% block content %}
+<!-- ============================================================
+     EXPENSE LIST PAGE
+     Shows all expenses in a filterable table.
+============================================================ -->
+
+<div class="container py-4">
+
+  <!-- Page Header -->
+  <div class="page-header d-flex justify-content-between align-items-start flex-wrap gap-2">
+    <div>
+      <h2 class="mb-1">
+        <i class="bi bi-list-ul me-2" style="color: #4f46e5;"></i>My Expenses
+      </h2>
+      <p class="text-muted mb-0">View and manage all your recorded expenses</p>
+    </div>
+    <a href="{% url 'add_expense' %}" class="btn btn-primary">
+      <i class="bi bi-plus-lg me-1"></i>Add Expense
+    </a>
+  </div>
+
+  <!-- Category Filter -->
+  <div class="card mb-4">
+    <div class="card-body py-3">
+      <form method="GET" class="d-flex flex-wrap align-items-center gap-2">
+        <label class="form-label mb-0 fw-semibold me-2">
+          <i class="bi bi-filter me-1"></i>Filter by Category:
+        </label>
+        <select name="category" class="form-select form-select-sm" style="width: auto;" onchange="this.form.submit()">
+          <option value="">All Categories</option>
+          {% for cat_value, cat_label in categories %}
+            <option value="{{ cat_value }}" {% if selected_category == cat_value %}selected{% endif %}>
+              {{ cat_label }}
+            </option>
+          {% endfor %}
+        </select>
+        {% if selected_category %}
+          <a href="{% url 'expense_list' %}" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-x me-1"></i>Clear
+          </a>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+
+  <!-- Expense Table -->
+  <div class="card">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <span>
+        <i class="bi bi-table me-2"></i>
+        {% if selected_category %}
+          {{ selected_category }} Expenses
+        {% else %}
+          All Expenses
+        {% endif %}
+      </span>
+      <span class="badge bg-primary">Total: ₹{{ total|floatformat:2 }}</span>
+    </div>
+
+    <div class="card-body p-0">
+      {% if expenses %}
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th class="text-end">Amount</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for expense in expenses %}
+              <tr>
+                <td class="text-muted small">{{ forloop.counter }}</td>
+                <td class="fw-medium">{{ expense.title }}</td>
+                <td>
+                  <span class="badge badge-category cat-{{ expense.category }}">
+                    {{ expense.category }}
+                  </span>
+                </td>
+                <td class="text-muted small">{{ expense.date|date:"d M Y" }}</td>
+                <td class="text-muted small">
+                  {% if expense.description %}
+                    {{ expense.description|truncatechars:40 }}
+                  {% else %}
+                    <em class="text-muted">—</em>
+                  {% endif %}
+                </td>
+                <td class="text-end fw-semibold">₹{{ expense.amount|floatformat:2 }}</td>
+                <td class="text-center">
+                  <div class="d-flex gap-1 justify-content-center">
+                    <!-- Edit Button -->
+                    <a href="{% url 'edit_expense' expense.pk %}"
+                       class="btn btn-sm btn-outline-primary"
+                       title="Edit">
+                      <i class="bi bi-pencil"></i>
+                    </a>
+                    <!-- Delete Button -->
+                    <a href="{% url 'delete_expense' expense.pk %}"
+                       class="btn btn-sm btn-outline-danger"
+                       title="Delete">
+                      <i class="bi bi-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+
+            <!-- Table Footer Total -->
+            <tfoot>
+              <tr style="background: #f8fafc;">
+                <td colspan="5" class="fw-bold text-end text-muted">Grand Total:</td>
+                <td class="text-end fw-bold" style="color: #4f46e5;">₹{{ total|floatformat:2 }}</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+      {% else %}
+        <!-- Empty State -->
+        <div class="empty-state py-5">
+          <div class="empty-icon">🧾</div>
+          {% if selected_category %}
+            <h5>No {{ selected_category }} expenses found</h5>
+            <p class="text-muted small">Try a different category filter or add a new expense.</p>
+            <a href="{% url 'expense_list' %}" class="btn btn-outline-secondary btn-sm me-2">
+              <i class="bi bi-arrow-left me-1"></i>Show All
+            </a>
+          {% else %}
+            <h5>No expenses yet!</h5>
+            <p class="text-muted small">You haven't added any expenses. Start tracking now.</p>
+          {% endif %}
+          <a href="{% url 'add_expense' %}" class="btn btn-primary btn-sm">
+            <i class="bi bi-plus-lg me-1"></i>Add Your First Expense
+          </a>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %}Home — Expense Tracker{% endblock %}
+
+{% block content %}
+<!-- ============================================================
+     HOME / LANDING PAGE
+     Shown to users who are not logged in.
+     Uses Bootstrap hero section + feature cards.
+============================================================ -->
+
+<!-- Hero Section -->
+<section class="py-5 text-center" style="background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%); color: white; min-height: 60vh; display: flex; align-items: center;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="mb-4" style="font-size: 4rem;">💰</div>
+        <h1 class="display-5 fw-bold mb-3">Track Every Rupee<br>Effortlessly</h1>
+        <p class="lead mb-4 opacity-75">
+          A simple, beautiful expense tracker to manage your daily spending,
+          understand your habits, and take control of your finances.
+        </p>
+        <div class="d-flex flex-wrap gap-3 justify-content-center">
+          <a href="{% url 'register' %}" class="btn btn-light btn-lg px-4 fw-semibold" style="color: #4f46e5;">
+            <i class="bi bi-person-plus me-2"></i>Get Started Free
+          </a>
+          <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg px-4">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-2">Everything you need</h2>
+    <p class="text-center text-muted mb-5">Simple tools to manage your spending</p>
+
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="card h-100 text-center p-3">
+          <div class="card-body">
+            <div class="mb-3" style="font-size: 2.5rem;">📊</div>
+            <h5 class="card-title fw-bold">Dashboard Overview</h5>
+            <p class="card-text text-muted">
+              See your total expenses, monthly spending, and category breakdowns at a glance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 text-center p-3">
+          <div class="card-body">
+            <div class="mb-3" style="font-size: 2.5rem;">✏️</div>
+            <h5 class="card-title fw-bold">Easy Expense Management</h5>
+            <p class="card-text text-muted">
+              Add, edit, and delete expenses in seconds. Categorize by Food, Travel, Bills, and more.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 text-center p-3">
+          <div class="card-body">
+            <div class="mb-3" style="font-size: 2.5rem;">🔒</div>
+            <h5 class="card-title fw-bold">Private & Secure</h5>
+            <p class="card-text text-muted">
+              Your data is yours. Each user sees only their own expenses — completely private.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-5" style="background: #f1f5f9;">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-2">7 Expense Categories</h2>
+    <p class="text-muted mb-4">Organize every purchase into the right bucket</p>
+    <div class="d-flex flex-wrap gap-2 justify-content-center">
+      <span class="badge badge-category cat-Food fs-6 px-3 py-2">🍔 Food</span>
+      <span class="badge badge-category cat-Travel fs-6 px-3 py-2">✈️ Travel</span>
+      <span class="badge badge-category cat-Shopping fs-6 px-3 py-2">🛍️ Shopping</span>
+      <span class="badge badge-category cat-Bills fs-6 px-3 py-2">💡 Bills</span>
+      <span class="badge badge-category cat-Education fs-6 px-3 py-2">📚 Education</span>
+      <span class="badge badge-category cat-Entertainment fs-6 px-3 py-2">🎮 Entertainment</span>
+      <span class="badge badge-category cat-Other fs-6 px-3 py-2">📦 Other</span>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5 text-center">
+  <div class="container">
+    <h2 class="fw-bold mb-3">Ready to take control?</h2>
+    <p class="text-muted mb-4">Create your free account and start tracking today.</p>
+    <a href="{% url 'register' %}" class="btn btn-primary btn-lg px-5">
+      <i class="bi bi-person-plus me-2"></i>Create Free Account
+    </a>
+  </div>
+</section>
+
+{% endblock %}
